@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Tracker</title>
+</head>
+<body>
+    <h1>Health Tracker</h1>
+    <form method="POST">
+        <label for="timestamp">Time:</label>
+        <input type="datetime-local" id="timestamp" name="timestamp" required>
+        <br>
+        <label for="weight">Weight (lbs):</label>
+        <input type="number" step="0.1" id="weight" name="weight" required>
+        <br>
+        <label for="blood_glucose">Blood Glucose (mg/dL):</label>
+        <input type="number" step="0.1" id="blood_glucose" name="blood_glucose" required>
+        <br>
+        <button type="submit">Add Entry</button>
+    </form>
+    <h2>Entries</h2>
+    <ul>
+        {% for entry in entries %}
+            <li>{{ entry.timestamp }} - Weight: {{ entry.weight }} kg, Blood Glucose: {{ entry.blood_glucose }} mg/dL</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
