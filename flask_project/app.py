@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -34,6 +34,20 @@ def index():
     with app.app_context():
         entries = Entry.query.order_by(Entry.timestamp.desc()).all()
     return render_template('index.html', entries=entries)
+
+@app.route('/data', methods=['GET'])
+def data_route():
+    entries = Entry.query.all()
+    data = [
+        {
+            'id': entry.id,
+            'timestamp': entry.timestamp.isoformat(),
+            'weight': entry.weight,
+            'blood_glucose': entry.blood_glucose
+        }
+        for entry in entries 
+    ]
+    return jsonify(data)
 
 if __name__ == '__main__':
     with app.app_context():
